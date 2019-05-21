@@ -5,7 +5,11 @@
 %
 % INPUT: Any Subject/Condition file ie: 01cr.set, 02fa.set, etc.
 %
-% OUTPUT: 
+% OUTPUT: Returns 'data' and 'labels'. 'data' is a matrix representing the
+% data for 2 electrodes over all trials and data points. 'labels' is an
+% array containing the necessary information if the saccade is to the left
+% or right. A value of '2' is a right saccade, a value of '1' is a left
+% saccade.
 %
 % Made by: Jonny Giordano
 % Data: May 21st, 2019
@@ -16,9 +20,6 @@ function [data, labels] = extract_data(data_name)
 
 %Set 'home' to current working direction
 home = pwd;
-
-%Choose file to access, this must be a cell array so single quotes only
-data_name = '01cr.set';
 
 %Use EEGLab to open a .set file and access EEG data
 tEEG = pop_loadset('filename',data_name,'filepath', strcat(home, '\data\'));
