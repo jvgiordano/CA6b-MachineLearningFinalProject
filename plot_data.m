@@ -7,7 +7,7 @@
 % OUTPUT: Plotted Data
 %
 % Made by: Jonny Giordano
-% Data: May 21st, 2019
+% Date: May 21st, 2019
 
 %Choose and import data
 file = '01cr.set'; %Select file
@@ -16,6 +16,7 @@ file = '01cr.set'; %Select file
 
 %Process data
 data_mean = mean(data,2); %Find time averages for all electrodes, for each trial
+data_mean = squeeze(data_mean); %Remove unnecessary dimension
 
 %Create indices for Left/Right saccade from label
 left = find(labels == 1); %Create array to denote when saccade is to the left from label array

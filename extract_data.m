@@ -12,7 +12,7 @@
 % saccade.
 %
 % Made by: Jonny Giordano
-% Data: May 21st, 2019
+% Date: May 21st, 2019
 
 function [data, labels] = extract_data(data_name)
 
