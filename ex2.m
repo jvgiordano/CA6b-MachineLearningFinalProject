@@ -71,7 +71,7 @@ initial_theta = zeros(n + 1, 1);
 
 % Compute and display initial cost and gradient
 [cost, grad] = costFunction(initial_theta, X, y);
-[cos2, grad2] = compute_cost(initial_theta, X, y);
+%[cos2, grad2] = compute_cost(initial_theta, X, y);
 
 fprintf('Cost at initial theta (zeros): %f\n', cost);
 fprintf('Expected cost (approx): 0.693\n');
@@ -82,7 +82,7 @@ fprintf('Expected gradients (approx):\n -0.1000\n -12.0092\n -11.2628\n');
 % Compute and display cost and gradient with non-zero theta
 test_theta = [-24; 0.2; 0.2];
 [cost, grad] = costFunction(test_theta, X, y);
-[cos2, grad2] = compute_cost(test_theta, X, y);
+%[cos2, grad2] = compute_cost(test_theta, X, y);
 
 fprintf('\nCost at test theta: %f\n', cost);
 fprintf('Expected cost (approx): 0.218\n');

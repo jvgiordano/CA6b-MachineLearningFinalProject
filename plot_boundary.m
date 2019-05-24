@@ -35,7 +35,7 @@ hold on;
 
 %%
 
-Theta = [100 -10 10];
+Theta = [1.7861 -0.4375 0.3633];
 
 %Plot Boundary
 
