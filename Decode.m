@@ -14,7 +14,7 @@
 % 2. Adjust Data Matrix, Add Intercept
 % 3. Initialize Theta
 % 4. Call Cost Function
-% 5. Gradient Descent
+% 5. fminuc (Minimizing function instead of gradient descent)
 % 6. Plot Decision Boundary
 % 7. Test on another data set
 %
@@ -44,14 +44,25 @@ Theta = zeros(column+1, 1); %Initialize our Theta to a vector with number of dat
 
 %% 4. Call our cost function
 
-[gradient, cost] = compute_cost(data, labels, Theta);
+Theta = [0; -10; 10];
+[gradient, cost] = compute_cost(Theta data, labels);
+
+%% 5. Minimizing our cost
+
+%We use Matlab's fminunc function which allows us to find the minimum of
+%the cost function. An alternative would be to use gradient descent, but
+%this way eliminates the necessity of choosing the right number of
+%iterations and and the learning rate
+
+options = optimset('GradObj', 'on', 'MaxIter', 30); %Set options for fminuc call
+
+[Theta, cost] = fminunc(@(x)(compute_cost(x, data, labels)), [20;10;10], options); %Call fminunc
 
 
-%% 5. 
+
+%% 6. Plot our data and decision boundary
 
 
-
-%% 6.
 
 
 

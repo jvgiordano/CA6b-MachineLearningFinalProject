@@ -9,7 +9,7 @@
 % Made by: Jonny Giordano
 % Date: May 21st, 2019
 
-function [gradient, cost] = compute_cost(data, labels, Theta);
+function [gradient, cost] = compute_cost(Theta, data, labels);
 
 cost = 0; %Initialize cost variable
 gradient = zeros(size(Theta)); %Creates vertical array of 0s with as many rows as Theta
@@ -20,5 +20,8 @@ h = (1 + exp(-(data*Theta))).^(-1); %This computes the sigmoid of our data times
 
 cost = (1/N) * sum(-labels.*log(h)-(1-labels).*log(1-h)); %Calculate the cost
 gradient = (1/N)*sum((h-labels).*data); %Calculate the gradient
+
+% cost = double(cost);
+% gradient = double(gradient);
 
 end
