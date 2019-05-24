@@ -8,6 +8,8 @@ hold on
 plot(two_dmatrix(right, 1), two_dmatrix(right, 2), 'ko', 'MarkerFaceColor', 'y', ...
 'MarkerSize', 7);
 
-xlabel('left gaze direction')
-ylabel('right gaze direction')
-title('distribution of ocular electrodes mean voltage as a function of gaze direction')
+xlabel('mean voltage per trial in electrode 1')
+ylabel('mean voltage per trial in electrode 2')
+title('distribution of ocular electrodes mean voltage as a function of electrode channel')
+
+legend('left saccadic eye movement','right saccadic eye movement')
