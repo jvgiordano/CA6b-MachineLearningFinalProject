@@ -44,8 +44,10 @@ Theta = zeros(column+1, 1); %Initialize our Theta to a vector with number of dat
 
 %% 4. Call our cost function
 
-Theta = [0; -10; 10];
-[gradient, cost] = compute_cost(Theta data, labels);
+Theta = [0; 0.1; 0.1];
+
+[cost, gradient] = compute_cost(Theta, data, labels);
+[cost2, gradient] = costFunction(Theta, data, labels);
 
 %% 5. Minimizing our cost
 
@@ -56,8 +58,7 @@ Theta = [0; -10; 10];
 
 options = optimset('GradObj', 'on', 'MaxIter', 30); %Set options for fminuc call
 
-[Theta, cost] = fminunc(@(x)(compute_cost(x, data, labels)), [20;10;10], options); %Call fminunc
-
+[Theta, cost] = fminunc(@(x)(compute_cost(x, data, labels)), [0; 0.2; 0.2], options); %Call fminunc
 
 
 %% 6. Plot our data and decision boundary
