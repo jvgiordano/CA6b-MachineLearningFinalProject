@@ -1,0 +1,37 @@
+% TITLE: Classifier Prediction
+%
+% SUMMARY: This script makes a prediction of the data based on the weights
+% developed on the training data
+%
+% INPUT: 
+%
+% OUTPUT: 
+%
+% Made by: Jonny Giordano
+% Started: May 23st, 2019
+
+function [Correct Incorrect] = classifier_score(Theta, data_test, labels_test)
+   
+    Num_trials = length(labels_test); %Find number of trials
+    prediction = length(lables_test);
+    
+    z = data_test*Theta;
+    h = zeros(size(z));
+    h = (1 + exp(-z)).^(-1); %This computes the sigmoid of our data times our weights
+                             % ie 'h' is our predicted value
+    
+    for trial = 1:Num_trials
+            if h(i,1) >= 0.5
+                prediction(i,1) = 1;
+            else
+                prediction(i,1) = 0;
+            end
+    end
+    
+
+
+
+
+    Incorrect = 1 - Correct
+
+end

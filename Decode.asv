@@ -96,7 +96,7 @@ plot_boundary_test(Theta, data_train, data_test, labels_test)
 
 correct = classifier_score(Theta, data_test, labels_test);
 
-disp('The logistic classifier had an accuracy (%) of: ')
-disp(correct)
+fprintf('The
+
 
 
