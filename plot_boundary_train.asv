@@ -32,19 +32,20 @@ hold on;
 
 %Plot the boundary line, note boundary line comes from data_train!
 
-%Our decision boundary occurs when  0 = Theta(1) + Theta(2)x2 + Theta(3)x3
-%and we so we can rearrange this as: 
-% x3 = (Theta(1) + Theta(2)x2)/ -Theta(3))
-% Choose the max/min data points in x2 axis, and find the corresponding points
-% in the x3 axis and plot
+%Our decision boundary occurs when  0 = Theta(1) + Theta(2)x2 + Theta(3
 
-bottom_point = min(data_train(2,:)); %Check each electrode, find minimum point
+bottom_point = min([min(data_train(1,:)), min(data_train(2,:))]); %Check each electrode, find minimum point
 
-top_point = max(data_train(2,:)); %Check each electrode, find maximum point
+top_point = max([max(data_train(1,:)), max(data_train(2,:))]); %Check each electrode, find maximum point
 
-end_points_x = [bottom_point-5, top_point+5]; %Extend 'x-axis' end points
+end_points_x = [bottom_point-10, top_point+10]; %Extend 'x-axis' end points
 
-end_points_y = (Theta(1) + Theta(2).*end_points_x)./(-Theta(3));
+end_points_y = -1.*(Theta(2).*end_points_x + Theta(1)); %Calculate line between x-values using slope equation, this is wrong
+
+%end_points_x = [min(data_train(2,:))-5, max(data_train(2,:))+5]; %Find the max and min
+
+end_points_y = -(1./Theta(3)).*(Theta(2).*end_points_x + Theta(1)); %This
+%is right
 
 plot(end_points_x, end_points_y)
 legend('Left Saccade', 'Right Saccade','Classifier Boundary')
