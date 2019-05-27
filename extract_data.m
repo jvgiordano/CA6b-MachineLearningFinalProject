@@ -27,10 +27,10 @@ tEEG = pop_loadset('filename',data_name,'filepath', strcat(home, '\data\'));
 %Collect data
 
 %Collect data for all trials from left electrode, left HEOG is 9
-Left = tEEG.data(9,:,:);
+Left = tEEG.data(7,:,:);
 
 %Collect data from all trials from right electrode, right HEOG is 20
-Right = tEEG.data(20,:,:);
+Right = tEEG.data(24,:,:);
 
 %Concatenate data
 

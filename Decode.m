@@ -63,9 +63,26 @@ options = optimset('GradObj', 'on', 'MaxIter', 30); %Set options for fminuc call
 %% 6. Plot our data and decision boundary
 
 
+%Call Plot Boundary Function
+plot_boundary(Theta, data, labels)
 
 
+%% Test on another data set
 
+file = '01cr.set'; %Select file
 
+[data_dirty, labels] = extract_data(file);
+
+data_mean = mean(data_dirty,2); %Find time averages for all electrodes, for each trial
+data_mean = squeeze(data_mean); %Remove unnecessary dimension
+
+data_mean = transpose(data_mean); %Switch to vertical style
+[rows, column] = size(data_mean); %Find dimensions of data
+data_mean = [ones(rows, 1) data_mean]; %Add interncept of '1'
+data = double(data_mean); %Convert to double to used by fminunc later on
+
+labels = labels-1; %Previously,  '2' = right, '1' = left
+                   %For our cost calculate, set '1' = right, '0' = left
+labels = transpose(labels); %Switch to verticle style
 
 
