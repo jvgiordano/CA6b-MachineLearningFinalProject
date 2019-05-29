@@ -25,20 +25,16 @@ home = pwd;
 tEEG = pop_loadset('filename',data_name,'filepath', strcat(home, '\data\'));
 
 %Collect data
-data = []; %initialize data array
-for electrode = 1:62 %Collect data for each electrode
-    temp_data = tEEG.data(electrode,:,:);
-    data = [data; temp_data];
-end
-
 
 %Collect data for all trials from left electrode, left HEOG is 9
-%Left = tEEG.data(9,:,:);
+Left = tEEG.data(9,:,:);
 
 %Collect data from all trials from right electrode, right HEOG is 20
-%Right = tEEG.data(20,:,:);
+Right = tEEG.data(20,:,:);
+
 %Concatenate data
-%data = [Left; Right];
+
+data = [Left; Right];
 
     
 %Collect labels for each trials

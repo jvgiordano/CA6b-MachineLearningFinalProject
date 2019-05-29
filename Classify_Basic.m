@@ -23,7 +23,7 @@
 %% 1. Choose Training File and Import
 file = '01cr.set'; %Select file
 
-[data_dirty, labels_train] = extract_data(file); %Call extract data function, labels denotes trial outcomes/condition
+[data_dirty, labels_train] = extract_data_basic(file); %Call extract data function, labels denotes trial outcomes/condition
 
 %% 2. Process data, Add Intercept of '1', Adjust labels
 data_mean = mean(data_dirty,2); %Find time averages for all electrodes, for each trial
@@ -47,7 +47,7 @@ Theta = zeros(column+1, 1); %Initialize our Theta to a vector with number of dat
 
 initial_theta = [0; 0.1; 0.1];
 
-[cost, gradient] = compute_cost(initial_theta, data_train, labels_train);
+[cost, gradient] = compute_cost_basic(initial_theta, data_train, labels_train);
 
 %% 5. Minimizing our cost
 
@@ -58,7 +58,7 @@ initial_theta = [0; 0.1; 0.1];
 
 options = optimset('GradObj', 'on', 'MaxIter', 30); %Set options for fminuc call
 
-[Theta, cost] = fminunc(@(x)(compute_cost(x, data_train, labels_train)), initial_theta, options); %Call fminunc
+[Theta, cost] = fminunc(@(x)(compute_cost_basic(x, data_train, labels_train)), initial_theta, options); %Call fminunc
 
 
 %% 6. Plot our data and decision boundary
