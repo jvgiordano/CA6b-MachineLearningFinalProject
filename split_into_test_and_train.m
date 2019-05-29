@@ -16,8 +16,9 @@ output_dir_test = strcat(home, '\Data\Test');
 output_dir_train = strcat(home, '\Data\Train');
 labels = [];
 
-% loop over all subjects
-for subject_n = 1:1
+% loop over all subjects, there are 17 subject, but 2 were removed, so 19
+% is max of i
+for subject_n = 1:2
     % create the data directory path
     data_dir = ['./', num2str(subject_n), '/'];
     % loop over the types of trials: hits, false alarms, etc.
@@ -32,7 +33,7 @@ for subject_n = 1:1
         doc = sprintf('%02d%s.set',subject_n,trial_types(trial_type_ind)); %sprintf must be used for newer Matlab versions, filename is of form '01cr.set'
         
         %WINDOWS
-        tmp = pop_loadset('filename',doc,'filepath', strcat(home, '\data\')); %load in subject data by condition
+        tmp = pop_loadset('filename',doc,'filepath', strcat(home, '\data\original')); %load in subject data by condition
         
         how_many = size(tmp.data, 3); %Find out how many trials there are
         test_size = round(0.10*how_many); %Find out how many trials are in testing set and round up, 10% of trials are for testing
@@ -42,8 +43,10 @@ for subject_n = 1:1
             selection(i) = 1; 
         end
         
+        subj_num = sprintf('%02i', subject_n);
+        
         tmp_test = pop_rejepoch(tmp, selection, 0); %Remove the first 90%, create test_set
-        title = strcat(num2str(subject_n), sprintf('%s.set', trial_types(trial_type_ind)));
+        title = strcat(subj_num, sprintf('%s.set', trial_types(trial_type_ind)));
         EEG_test = pop_saveset(tmp_test, 'filename', ...
             title, ...
             'filepath', output_dir_test);
