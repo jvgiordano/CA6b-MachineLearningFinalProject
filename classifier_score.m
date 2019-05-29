@@ -13,17 +13,17 @@
 function [correct] = classifier_score(Theta, data_test, labels_test)
    
     Num_trials = length(labels_test); %Find number of trials
-    prediction = length(labels_test);
+    prediction = length(labels_test); %create array for prediction for same number of trials
     
     z = data_test*Theta;
     h = zeros(size(z));
     h = (1 + exp(-z)).^(-1); %This computes the sigmoid of our data times our weights
                              % ie 'h' is our predicted probability of our
-                             % value
+                             % value (h = hypothesis)
     
     correct = 0; %Initialize correct trials
     
-    for trial = 1:Num_trials %Check probabiliy, seperate at 0.5 mark
+    for trial = 1:Num_trials %Check probability, seperate trial hypothesis at 0.5 mark
             if h(trial) >= 0.5
                 prediction(trial) = 1;
             else

@@ -2,9 +2,10 @@
 %
 % SUMMARY: This script classifies the data
 %
-% INPUT: Any Subject/Condition file ie: 01cr.set, 02fa.set, etc.
+% INPUT: Any Subject/Condition file ie: 01cr.set, 01hit.set, etc.
 %
-% OUTPUT: Plotted Classification accuracy
+% OUTPUT: Plotted Data with Classifier boundary for training and test set.
+% Percentage of correctly classified trials.
 %
 % Made by: Jonny Giordano
 % Date: May 21st, 2019
@@ -68,10 +69,10 @@ figure(1)
 plot_boundary_train(Theta, data_train, labels_train)
 
 
-%% Test on another data set
+%% Test on another data set, repeat of above 6 steps but with testing set
 
 %Extract data
-file = '01miss.set'; %Select file
+file = '01miss.set'; %Select file that is different from training set
 
 [data_dirty, labels_test] = extract_data(file);
 
@@ -94,7 +95,7 @@ plot_boundary_test(Theta, data_train, data_test, labels_test)
 
 %Check performance
 
-correct = classifier_score(Theta, data_test, labels_test);
+correct = classifier_score(Theta, data_test, labels_test); %Call classifier_score function
 
 disp('The logistic classifier had an accuracy (%) of: ')
 disp(correct)

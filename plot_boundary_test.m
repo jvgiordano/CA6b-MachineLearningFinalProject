@@ -24,7 +24,7 @@ right = find(labels_test == 1); %Create array to denote when saccade is to the r
 plot(data_test(2,left), data_test(3, left), 'X', 'MarkerSize', 12, 'LineWidth', 1.5); %Plot electrode data, left saccade
 hold on;
 plot(data_test(2, right), data_test(3, right), 'O', 'MarkerSize', 10, 'LineWidth', 1.5); %Plot electrode data, right saccade
-title({'Right versus Left Saccade','L-HEOG and R-HEOG'});
+title({'Right versus Left Saccade - Test Set','L-HEOG and R-HEOG'});
 xlabel('L-HEOG mean voltage across trial')
 ylabel('R-HEOG mean voltage across trial')
 legend('Left Saccade', 'Right Saccade')
@@ -34,9 +34,9 @@ hold on;
 
 %Our decision boundary occurs when  0 = Theta(1) + Theta(2)x2 + Theta(3)x3
 %and we so we can rearrange this as: 
-% x3 = (Theta(1) + Theta(2)x2)/ -Theta(3))
-% Choose the max/min data points in x2 axis, and find the corresponding points
-% in the x3 axis and plot
+%x3 = (Theta(1) + Theta(2)x2)/ -Theta(3))
+%Choose the max/min data points in x2 axis, and find the corresponding points
+%in the x3 axis and plot
 
 bottom_point = min(data_train(2,:)); %Check each electrode, find minimum point
 

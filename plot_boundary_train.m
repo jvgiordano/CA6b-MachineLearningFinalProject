@@ -24,7 +24,7 @@ right = find(labels_train == 1); %Create array to denote when saccade is to the 
 plot(data_train(2,left), data_train(3, left), 'X', 'MarkerSize', 12, 'LineWidth', 1.5); %Plot electrode data, left saccade
 hold on;
 plot(data_train(2, right), data_train(3, right), 'O', 'MarkerSize', 10, 'LineWidth', 1.5); %Plot electrode data, right saccade
-title({'Right versus Left Saccade','L-HEOG and R-HEOG'});
+title({'Right versus Left Saccade - Training Set','L-HEOG and R-HEOG'});
 xlabel('L-HEOG mean voltage across trial')
 ylabel('R-HEOG mean voltage across trial')
 legend('Left Saccade', 'Right Saccade')

@@ -24,7 +24,4 @@ h = (1 + exp(-z)).^(-1); %This computes the sigmoid of our data times our weight
 cost = (1/N) * sum(-labels.*log(h)-(1-labels).*log(1-h)); %Calculate the cost
 gradient = (1/N)*sum((h-labels).*data); %Calculate the gradient
 
-% cost = double(cost);
-% gradient = double(gradient);
-
 end
