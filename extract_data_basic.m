@@ -22,7 +22,7 @@ function [data, labels] = extract_data(data_name)
 home = pwd;
 
 %Use EEGLab to open a .set file and access EEG data
-tEEG = pop_loadset('filename',data_name,'filepath', strcat(home, '\data\'));
+tEEG = pop_loadset('filename',data_name,'filepath', strcat(home, '\data\basic'));
 
 %Collect data
 

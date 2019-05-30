@@ -20,24 +20,35 @@
 % 7. Test on another data set
 %
 
-%% 1. Choose Training File and Import
-file = '01cr.set'; %Select file
 
-[data_dirty, labels_train] = extract_data(file); %Call extract data function, labels denotes trial outcomes/condition
+
+%% 1. Choose Training File and Import, Select Feature to Classify
+file = 'Train.set'; %Select file
+
+experiment_type = "jump"; %Choose analysis, "saccade" for saccadic direction, anything else for stimulus jump/no-jump
+[data_dirty, labels_train] = extract_data(file, experiment_type); %Call extract data function, labels denotes trial outcomes/condition
+
+%%
+accuracy = zeros(1, size(data_dirty, 2)); %Initialize array to hold classification accuracies for each time
+for time = 1:size(data_dirty, 2) %Loop through every single time point, across all electrodes and trials
 
 %% 2. Process data, Add Intercept of '1', Adjust labels
-data_mean = mean(data_dirty,2); %Find time averages for all electrodes, for each trial
-data_mean = squeeze(data_mean); %Remove unnecessary dimension
 
-data_mean = transpose(data_mean); %Switch to vertical style
-[rows, column] = size(data_mean); %Find dimensions of data
-data_mean = [ones(rows, 1) data_mean]; %Add interncept of '1'
-data_train = double(data_mean); %Convert to double to used by fminunc later on, data_train
+data_select = data_dirty(:,time,:); %Select time point to classify at
+data_select = squeeze(data_select); %Remove unnecessary dimension
 
-labels_train = labels_train - 1; %Previously,  '2' = right, '1' = left
-                   %For our cost calculate, set '1' = right, '0' = left
-labels_train = transpose(labels_train); %Switch to verticle style
+data_select = transpose(data_select); %Switch to vertical style
+[rows, column] = size(data_select); %Find dimensions of data
+data_select = [ones(rows, 1) data_select]; %Add interncept of '1'
+data_train = double(data_select); %Convert to double to used by fminunc later on, data_train
 
+if experiment_type == "saccade"
+    labels_train = labels_train - 1; %Previously,  '2' = right, '1' = left, change labels to '1' = right, '0' = left
+end
+
+if isrow(labels_train) %Make sure labels is not a row vector
+    labels_train = transpose(labels_train); %Switch to verticle style
+end
 %% 3. Initialize our Theta
 
 Theta = zeros(column+1, 1); %Initialize our Theta to a vector with number of data sources (electrodes) plus an intercept
@@ -60,36 +71,56 @@ options = optimset('GradObj', 'on', 'MaxIter', 30); %Set options for fminuc call
 
 [Theta, cost] = fminunc(@(x)(compute_cost(x, data_train, labels_train)), initial_theta, options); %Call fminunc
 
+%% 6. Test on another data set, repeat above 5 steps but with testing set
 
-%% Test on another data set, repeat of above 6 steps but with testing set
+file = 'Test.set'; %Select file
 
-%Extract data
-file = '01miss.set'; %Select file that is different from training set
+experiment_type = "saccade"; %Choose analysis, "saccade" for saccadic direction, anything else for stimulus jump/no-jump
+[data_dirty, labels_test] = extract_data(file, experiment_type); %Call extract data function, labels denotes trial outcomes/condition
 
-[data_dirty, labels_test] = extract_data(file);
+data_select = data_dirty(:,time,:); %Select time point to classify at
+data_select = squeeze(data_select); %Remove unnecessary dimension
 
-data_mean = mean(data_dirty,2); %Find time averages for all electrodes, for each trial
-data_mean = squeeze(data_mean); %Remove unnecessary dimension
+data_select = transpose(data_select); %Switch to vertical style
+[rows, column] = size(data_select); %Find dimensions of data
+data_select = [ones(rows, 1) data_select]; %Add interncept of '1'
+data_test = double(data_select); %Convert to double to used by fminunc later on, data_test
 
-data_mean = transpose(data_mean); %Switch to vertical style
-[rows, column] = size(data_mean); %Find dimensions of data
-data_mean = [ones(rows, 1) data_mean]; %Add interncept of '1'
-data_test = double(data_mean); %Convert to double to used by fminunc later on, name data_test
+if experiment_type == "saccade"
+    labels_test = labels_test - 1; %Previously,  '2' = right, '1' = left, change labels to '1' = right, '0' = left
+end
 
-labels_test = labels_test - 1; %Previously,  '2' = right, '1' = left
-                               %For our cost calculate, set '1' = right, '0' = left
-labels_test = transpose(labels_test); %Switch to verticle style
-
-%Plot data_test, decision boundary
-%figure(2)
-%plot_boundary_test(Theta, data_train, data_test, labels_test)
-
+if isrow(labels_test) %Make sure labels is not a row vector
+    labels_train = transpose(labels_test); %Switch to verticle style
+end
 
 %Check performance
 
 correct = classifier_score(Theta, data_test, labels_test); %Call classifier_score function
 
-disp('The logistic classifier had an accuracy (%) of: ')
-disp(correct)
+accuracy(time) = correct;
+
+end
+
+%% 7. Plot Classification Accuracy Across Time
+
+t = -200:2:598; %Create time points in trial, -200ms to 569ms
+plot(t, accuracy)
+
+if experiment_type == "saccade"
+    title({'Classification Accuracy - Logistic Regression','Right versus Left Saccade','All Electrodes'});
+else
+    title({'Classification Accuracy - Logistic Regression','Stimulus Jump vs No-Jump','All Electrodes'});
+end
+
+xlabel('Time (ms)')
+ylabel('Accuracy (percentage)')
+hold on
+
+chance = 50*ones(1,length(accuracy)); %Plot chance level
+plot(t, chance, '--')
+legend('Classification accuracy','Chance Level')
+
+
 
 

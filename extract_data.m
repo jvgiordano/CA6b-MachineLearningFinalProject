@@ -14,7 +14,7 @@
 % Made by: Jonny Giordano
 % Date: May 21st, 2019
 
-function [data, labels] = extract_data(data_name)
+function [data, labels] = extract_data(data_name, experiment)
 
 %Load in file
 
@@ -32,33 +32,38 @@ for electrode = 1:62 %Collect data for each electrode
 end
 
 
-%Collect data for all trials from left electrode, left HEOG is 9
-%Left = tEEG.data(9,:,:);
+if experiment == "saccade"
+    %Collect labels for saccadic direction
+    labels = zeros(1, length(tEEG.epoch)); %Create labels array
+    for trial = 1:length(tEEG.epoch) %Find number of trials
+        for j = 1:3
+            result = char(tEEG.epoch(trial).eventtype(j)); %Convert choice to char
+            result = str2num(result(3)); %Select 3rd character, convert to int
 
-%Collect data from all trials from right electrode, right HEOG is 20
-%Right = tEEG.data(20,:,:);
-%Concatenate data
-%data = [Left; Right];
-
-    
-%Collect labels for each trials
-labels = zeros(1, length(tEEG.epoch)); %Create labels array
-for trial = 1:length(tEEG.epoch) %Find number of trials
-    for j = 1:3
-        result = char(tEEG.epoch(trial).eventtype(j)); %Convert choice to char
-        result = str2num(result(3)); %Select 3rd character, convert to int
-        
-        if result == 1 || result  == 2 %Check result, make sure it is correct label
-            break;
+            if result == 1 || result  == 2 %Check result, make sure it is correct label
+                break;
+            end
         end
+        labels(trial) = result ; %Collect event type of that trial
     end
-
-    labels(trial) = result ; %Collect event type of that trial
+    
+else
+    
+    %Collect labels for target jump - no jump
+    labels = zeros(1, length(tEEG.epoch)); %Create labels array
+    for trial = 1:length(tEEG.epoch) %Find number of trials
+        index = cell2mat(tEEG.epoch(trial).eventlatency) == 0; %Find event trigger at 0ms
+        event = find(index);
+        labels(trial) = cell2mat(tEEG.epoch(trial).eventtype(event));
         
-end
-
-
-
+        if labels(trial) == 1 || labels(trial) == 2 %Check if the label is a 'correct rejection' or 'false alarm'. This is where the target did NOT moved. All these case are relabeld to 0
+            labels (trial) = 0;
+        else
+            labels(trial) = 1; %If labels are for 'hits' or 'misses', the target moved. Relabel as '1'
+        end
+        
+    end
+    
 end
         
 
