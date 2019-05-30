@@ -30,8 +30,8 @@ experiment_type = "jump"; %Choose analysis, "saccade" for saccadic direction, an
 
 %%
 accuracy = zeros(1, size(data_dirty, 2)); %Initialize array to hold classification accuracies for each time
-for time = 1:size(data_dirty, 2) %Loop through every single time point, across all electrodes and trials
-
+for time = 1:2:size(data_dirty, 2) %Loop through every single time point, across all electrodes and trials
+disp(time)
 %% 2. Process data, Add Intercept of '1', Adjust labels
 
 data_select = data_dirty(:,time,:); %Select time point to classify at
@@ -75,7 +75,6 @@ options = optimset('GradObj', 'on', 'MaxIter', 30); %Set options for fminuc call
 
 file = 'Test.set'; %Select file
 
-experiment_type = "saccade"; %Choose analysis, "saccade" for saccadic direction, anything else for stimulus jump/no-jump
 [data_dirty, labels_test] = extract_data(file, experiment_type); %Call extract data function, labels denotes trial outcomes/condition
 
 data_select = data_dirty(:,time,:); %Select time point to classify at
@@ -104,8 +103,8 @@ end
 
 %% 7. Plot Classification Accuracy Across Time
 
-t = -200:2:598; %Create time points in trial, -200ms to 569ms
-plot(t, accuracy)
+t = -200:4:598; %Create time points in trial, -200ms to 569ms
+plot(t, accuracy(1:2:400))
 
 if experiment_type == "saccade"
     title({'Classification Accuracy - Logistic Regression','Right versus Left Saccade','All Electrodes'});
@@ -118,7 +117,7 @@ ylabel('Accuracy (percentage)')
 hold on
 
 chance = 50*ones(1,length(accuracy)); %Plot chance level
-plot(t, chance, '--')
+plot(t, chance(1:2:400), '--')
 legend('Classification accuracy','Chance Level')
 
 

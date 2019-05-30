@@ -18,7 +18,7 @@ labels = [];
 
 % loop over all subjects, there are 17 subject, but 2 were removed, so 19
 % is max of i
-for subject_n = 1:2
+for subject_n = 1:19
     % create the data directory path
     data_dir = ['./', num2str(subject_n), '/'];
     % loop over the types of trials: hits, false alarms, etc.
