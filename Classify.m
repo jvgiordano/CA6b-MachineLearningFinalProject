@@ -24,7 +24,7 @@
 %% 1. Choose Training File and Import, Select Feature to Classify
 file = 'Train.set'; %Select file
 
-experiment_type = "jump"; %Choose analysis, "saccade" for saccadic direction, anything else for stimulus jump/no-jump
+experiment_type = "saccade"; %Choose analysis, "saccade" for saccadic direction, anything else for stimulus jump/no-jump
 [data_dirty, labels_train] = extract_data(file, experiment_type); %Call extract data function, labels denotes trial outcomes/condition
 
 [data_dirty, labels_train] = balance_cases(data_dirty, labels_train); %Balance number of trials per condition by randomly removing trials from greater class
