@@ -74,7 +74,7 @@ plot_boundary_train(Theta, data_train, labels_train)
 %Extract data
 file = '01miss.set'; %Select file that is different from training set
 
-[data_dirty, labels_test] = extract_data(file);
+[data_dirty, labels_test] = extract_data_basic(file);
 
 data_mean = mean(data_dirty,2); %Find time averages for all electrodes, for each trial
 data_mean = squeeze(data_mean); %Remove unnecessary dimension

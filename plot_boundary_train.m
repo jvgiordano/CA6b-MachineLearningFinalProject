@@ -7,7 +7,7 @@
 % OUTPUT: Plotted Data
 %
 % Made by: Jonny Giordano
-% Started: May 23st, 2019
+% Started: May 23rd, 2019
 
 
 function plot_boundary(Theta, data_train, labels_train)

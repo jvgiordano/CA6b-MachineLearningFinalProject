@@ -2,13 +2,12 @@
 %
 % SUMMARY: This script classifies the data
 %
-% INPUT: Any Subject/Condition file ie: 01cr.set, 01hit.set, etc.
+% INPUT: Train and Test Data sets
 %
-% OUTPUT: Plotted Data with Classifier boundary for training and test set.
-% Percentage of correctly classified trials.
-%
+% OUTPUT: Plotted Data with Classifier boundary for test set.
+% 
 % Made by: Jonny Giordano
-% Date: May 21st, 2019
+% Date: May 30th, 2019
 
 % Break down of code
 % 1. Extract data
@@ -27,6 +26,8 @@ file = 'Train.set'; %Select file
 
 experiment_type = "jump"; %Choose analysis, "saccade" for saccadic direction, anything else for stimulus jump/no-jump
 [data_dirty, labels_train] = extract_data(file, experiment_type); %Call extract data function, labels denotes trial outcomes/condition
+
+[data_dirty, labels_train] = balance_cases(data_dirty, labels_train); %Balance number of trials per condition by randomly removing trials from greater class
 
 %%
 accuracy = zeros(1, size(data_dirty, 2)); %Initialize array to hold classification accuracies for each time
@@ -103,13 +104,13 @@ end
 
 %% 7. Plot Classification Accuracy Across Time
 
-t = -200:4:598; %Create time points in trial, -200ms to 569ms
+t = -200:4:598; %Create time points in trial, -200ms to 598ms
 plot(t, accuracy(1:2:400))
 
 if experiment_type == "saccade"
     title({'Classification Accuracy - Logistic Regression','Right versus Left Saccade','All Electrodes'});
 else
-    title({'Classification Accuracy - Logistic Regression','Stimulus Jump vs No-Jump','All Electrodes'});
+    title({'Classification Accuracy - Logistic Regression','CR vs Miss','All Electrodes'});
 end
 
 xlabel('Time (ms)')
@@ -120,6 +121,7 @@ chance = 50*ones(1,length(accuracy)); %Plot chance level
 plot(t, chance(1:2:400), '--')
 legend('Classification accuracy','Chance Level')
 
+axis([-200 598 45 100])
 
 
 

@@ -2,7 +2,7 @@
 % and training files. ~90% of the cases will be for training, and ~10% for
 % training
 %
-% INPUT: Data files in /Data
+% INPUT: Data files in /Data/Original
 %
 % OUPUT: Data files will carry the same names as the original
 % subject/condition file, but will be placed in /Data/Test and /Data/Train
@@ -10,9 +10,9 @@
 % Made by: Jonny Giordano
 % Date May 29th, 2019
 
-trial_types = ["cr", "fa", "hit", "miss"];
+trial_types = ["cr", "fa", "hit", "miss"]; %Create array with possible conditions
 home = pwd;
-output_dir_test = strcat(home, '\Data\Test');
+output_dir_test = strcat(home, '\Data\Test'); %Set output directory
 output_dir_train = strcat(home, '\Data\Train');
 labels = [];
 
@@ -28,7 +28,7 @@ for subject_n = 1:19
         continue
     end
     
-    for trial_type_ind = 1:4
+    for trial_type_ind = [1 4] %Choose only CR = 1 and Miss = 4
 
         doc = sprintf('%02d%s.set',subject_n,trial_types(trial_type_ind)); %sprintf must be used for newer Matlab versions, filename is of form '01cr.set'
         
@@ -46,9 +46,9 @@ for subject_n = 1:19
         subj_num = sprintf('%02i', subject_n);
         
         tmp_test = pop_rejepoch(tmp, selection, 0); %Remove the first 90%, create test_set
-        title = strcat(subj_num, sprintf('%s.set', trial_types(trial_type_ind)));
+        title_new = strcat(subj_num, sprintf('%s.set', trial_types(trial_type_ind)));
         EEG_test = pop_saveset(tmp_test, 'filename', ...
-            title, ...
+            title_new, ...
             'filepath', output_dir_test);
         
         selection = logical(selection); %Convert to logical array
@@ -56,7 +56,7 @@ for subject_n = 1:19
          
         tmp_train = pop_rejepoch(tmp, selection, 0); %Remove the first 90%, create test_set
         EEG_train = pop_saveset(tmp_train, 'filename', ...
-            title, ...
+            title_new, ...
             'filepath', output_dir_train);
         
     end

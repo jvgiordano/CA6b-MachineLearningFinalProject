@@ -3,16 +3,18 @@
 % SUMMARY: This script extracts the EEG data in the '.set' file for
 % direct analysis in Matlab
 %
-% INPUT: Any Subject/Condition file ie: 01cr.set, 02fa.set, etc.
+% INPUT: Any Subject/Condition file ie: 01cr.set, 02fa.set, etc, or Test
+% and Train data
 %
-% OUTPUT: Returns 'data' and 'labels'. 'data' is a matrix representing the
-% data for 2 electrodes over all trials and data points. 'labels' is an
+% OUTPUT: Returns 'data' and 'labels'. 'data' in a matrix representing the
+% data for X number of electrodes over all trials and data points. 'labels' is an
 % array containing the necessary information if the saccade is to the left
 % or right. A value of '2' is a right saccade, a value of '1' is a left
-% saccade.
+% saccade. A value of '0' is a correct_rejection, a value of '1' is a miss
+% for no saccadic classification
 %
 % Made by: Jonny Giordano
-% Date: May 21st, 2019
+% Date: May 29th, 2019
 
 function [data, labels] = extract_data(data_name, experiment)
 
@@ -26,9 +28,9 @@ tEEG = pop_loadset('filename',data_name,'filepath', strcat(home, '\data\'));
 
 %Collect data
 data = []; %initialize data array
-for electrode = 1:62 %Collect data for each electrode
+for electrode = 1:62 %Collect data for each electrode // For EOG electrodes do: electrode = [9 20] // For Parietal-Occipital feature selection do: electrode = [12 13 14 18 19 43 44 45 46 47 48 49 50 51] 
     temp_data = tEEG.data(electrode,:,:);
-    data = [data; temp_data];
+    data = [data; temp_data]; %Concatenate data
 end
 
 

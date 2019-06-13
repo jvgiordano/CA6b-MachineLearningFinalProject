@@ -1,11 +1,11 @@
 % TITLE: Classifier Prediction
 %
 % SUMMARY: This script makes a prediction of the data based on the weights
-% developed on the training data
+% developed in the training data
 %
-% INPUT: 
+% INPUT: Theta, data_test, and labels_test from the Classifier script
 %
-% OUTPUT: 
+% OUTPUT: The percentage of correctly classified trials
 %
 % Made by: Jonny Giordano
 % Started: May 23st, 2019
@@ -25,9 +25,9 @@ function [correct] = classifier_score(Theta, data_test, labels_test)
     
     for trial = 1:Num_trials %Check probability, seperate trial hypothesis at 0.5 mark
             if h(trial) >= 0.5
-                prediction(trial) = 1;
+                prediction(trial) = 1; %Predict 1 is the probabilty is greater than or equal to 0.5
             else
-                prediction(trial) = 0;
+                prediction(trial) = 0; %Predict 0 otherwise
             end
             
             if prediction(trial) == labels_test(trial)%If prediction matches label, mark correct response

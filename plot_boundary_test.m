@@ -7,7 +7,7 @@
 % OUTPUT: Plotted Data
 %
 % Made by: Jonny Giordano
-% Started: May 23st, 2019
+% Started: May 23rd, 2019
 
 function plot_boundary(Theta, data_train, data_test, labels_test)
 
@@ -18,7 +18,6 @@ labels_test = transpose(labels_test);
 %Create indices for Left/Right saccade from label
 left = find(labels_test == 0); %Create array to denote when saccade is to the left from label array
 right = find(labels_test == 1); %Create array to denote when saccade is to the right
-%}
 
 %Plot the data, note, plotted data comes from data_test!
 plot(data_test(2,left), data_test(3, left), 'X', 'MarkerSize', 12, 'LineWidth', 1.5); %Plot electrode data, left saccade

@@ -1,8 +1,8 @@
 % TITLE: Cost Function
 %
-% SUMMARY: Costs the current function cost and gradient
+% SUMMARY: Computes the current function cost and gradient
 %
-% INPUT: data_mean, labels, and Theta
+% INPUT: Theta, data, and labels, should be for training data
 %
 % OUTPUT: Plotted Data
 %
